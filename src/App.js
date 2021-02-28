@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { Flight } from './components';
+import Logo from './images/Logo.png'
+import { fetchData } from './api';
+import styles from './App.module.css';
+
+class App extends Component {
+
+    state = {
+        tickets: [],
+        error: false,
+    }
+
+    async componentDidMount() {
+        try {
+            const fetchedData = await fetchData();
+            this.setState({
+                tickets: fetchedData.tickets,
+                error: false,
+             })
+        } catch (error) {
+            this.setState({
+                error: true,
+                tickets: [],
+             })
+        }
+    }
+
+    render() {
+
+        const { tickets, error } = this.state;
+
+        return(
+            <div className={styles.container}>
+                <img className={styles.image} src={Logo} />
+                {error ? <div className={styles.container}>Что-то пошло не так, пожалуйста, обновите страницу</div> :
+                    tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
+                }
+            </div>
+        )
+    }
+};
 
 export default App;
