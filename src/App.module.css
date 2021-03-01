@@ -9,6 +9,11 @@ body {
   flex-direction: column;
 }
 
+.errorMessage {
+  margin-top: 50px;
+  font-size: 20px;
+}
+
 .image {
   margin-top: 50px;
 }
