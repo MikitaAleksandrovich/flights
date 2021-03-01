@@ -18,9 +18,22 @@ body {
 }
 
 .tab {
-  border: 1px solid black;
+  background: #FFFFFF;
+  border: 1px solid #DFE5EC;
+  padding: 15px 20px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #4A4A4A;
+  cursor: pointer;
 }
 
 .activeTab {
   background-color: #2196F3;
+  color: #fff;
 }
