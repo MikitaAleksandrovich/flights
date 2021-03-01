@@ -33,7 +33,7 @@ class App extends Component {
 
         return(
             <div className={styles.container}>
-                <img className={styles.image} src={Logo} />
+                <img className={styles.image} src={Logo} alt="app_logo" />
                 {error ? <div className={styles.container}>Что-то пошло не так, пожалуйста, обновите страницу</div> :
                     tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
                 }
