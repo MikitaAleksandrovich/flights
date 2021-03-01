@@ -13,3 +13,14 @@ body {
   margin-top: 50px;
 }
   
+.tabs {
+  display: flex;
+}
+
+.tab {
+  border: 1px solid black;
+}
+
+.activeTab {
+  background-color: #2196F3;
+}

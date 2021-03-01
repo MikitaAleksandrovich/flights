@@ -1,0 +1,1 @@
+export const flightTabIndexes = ['самый дешевый', 'самый быстрый', 'оптимальный'];

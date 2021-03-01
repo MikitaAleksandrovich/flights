@@ -1,45 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Flight } from './components';
 import Logo from './images/Logo.png'
 import { fetchData } from './api';
+import { flightTabIndexes } from './constants/constants';
 import styles from './App.module.css';
 
-class App extends Component {
+const App = () => {
+    const [tickets, setTickets] = useState([]);
+    const [error, setError] = useState(false);
+    const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-    state = {
-        tickets: [],
-        error: false,
-    }
+    useEffect(() => {
+        (async function() {
+            try {
+                const data = await fetchData();
+                setTickets(data.tickets);
+            } catch (e) {
+                setError(true);
+            }
+        })();
+    }, []);
 
-    async componentDidMount() {
-        try {
-            const fetchedData = await fetchData();
-            this.setState({
-                tickets: fetchedData.tickets,
-                error: false,
-             })
-        } catch (error) {
-            this.setState({
-                error: true,
-                tickets: [],
-             })
+    const handleTabIndex = (index) => {
+        setActiveTabIndex(index);
+      };
+
+    return (
+        <div className={styles.container}>
+        <img className={styles.image} src={Logo} alt="app_logo" />
+        <div className={styles.tabs}>
+            {flightTabIndexes.map((tab, index) => (
+                <div className={`${styles.tab} ${activeTabIndex === index && styles.activeTab}`} onClick={() => handleTabIndex(index)}>{tab}</div>
+            ))}
+        </div>
+        {error ? <div className={styles.container}>Что-то пошло не так, пожалуйста, обновите страницу</div> :
+            tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
         }
-    }
-
-    render() {
-
-        const { tickets, error } = this.state;
-
-        return(
-            <div className={styles.container}>
-                <img className={styles.image} src={Logo} alt="app_logo" />
-                {error ? <div className={styles.container}>Что-то пошло не так, пожалуйста, обновите страницу</div> :
-                    tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
-                }
-            </div>
-        )
-    }
-};
+    </div>
+    )
+}
 
 export default App;
