@@ -9,6 +9,26 @@ body {
   flex-direction: column;
 }
 
+.mainContainer {
+  display: flex;
+  margin-top: 50px;
+}
+
+.flightsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 75px 0 20px;
+}
+
+.checkbox {
+  display: flex;
+}
+
 .errorMessage {
   margin-top: 50px;
   font-size: 20px;
@@ -23,7 +43,7 @@ body {
 }
 
 .tab {
-  background: #FFFFFF;
+  background: #fff;
   border: 1px solid #DFE5EC;
   padding: 15px 20px;
   font-weight: 600;
@@ -41,4 +61,12 @@ body {
 .activeTab {
   background-color: #2196F3;
   color: #fff;
+}
+
+.label {
+  font-size: 13px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #4A4A4A;
 }

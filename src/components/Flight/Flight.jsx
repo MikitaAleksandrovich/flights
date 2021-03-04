@@ -6,7 +6,6 @@ import moment from 'moment';
 import styles from './Flight.module.css';
 
 const Flight = ({ ticket }) => {
-    console.log(ticket);
     return (
         <div className={styles.container}>
            <div className={styles.header}>

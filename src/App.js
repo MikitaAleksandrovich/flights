@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Flight } from './components';
+import { Flight, Checkbox } from './components';
 import Logo from './images/Logo.png'
 import { fetchData } from './api';
 import { flightTabIndexes } from './constants/constants';
+import { flightCheckboxes } from './constants/constants';
 import styles from './App.module.css';
 
 const App = () => {
@@ -11,6 +12,11 @@ const App = () => {
     const [tickets, setTickets] = useState([]);
     const [error, setError] = useState(false);
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
+    const [checkedItems, setCheckedItems] = useState({});
+
+    const handleCheckboxChange = (event) => {
+        setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
+    }
 
     useEffect(() => {
         (async function() {
@@ -24,25 +30,27 @@ const App = () => {
         })();
     }, []);
 
-    const handleTabIndex = (index) => {
-        setActiveTabIndex(index);
-        switch (index) {
-            case 0:
-                setTickets(tickets.filter((ticket) => ticket.price === Math.min(...tickets.map((ticket) => ticket.price))));
-                break;
-            case 1:
-                setTickets(allTickets);
-                break;
-            case 2:
-                setTickets(allTickets);
-                break;
-            default:
-                setTickets(allTickets);
-                break;
-        }
-      };
+// Get slowest flight from the list of flights
+const getSegmentsDuration = flight => flight.segments[0].duration + flight.segments[1].duration;
 
-    console.log('tickets', tickets)
+const getSlowestFlight = data => data.length > 0 && data.reduce((acc, current) => {
+  return getSegmentsDuration(acc) < getSegmentsDuration(current) ? acc : current;
+})
+
+console.log('slowestFlight', getSlowestFlight(allTickets));
+console.log('checkedItems', checkedItems);
+    
+const handleTabIndex = (index) => {
+  setActiveTabIndex(index);
+    switch (index) {
+      case 0:
+        setTickets(tickets.filter((ticket) => ticket.price === Math.min(...tickets.map((ticket) => ticket.price))));
+        break;
+      default:
+        setTickets(allTickets);
+        break;
+    }
+  };
 
     return (
         <div className={styles.container}>
@@ -52,9 +60,24 @@ const App = () => {
                 <div className={`${styles.tab} ${activeTabIndex === index && styles.activeTab}`} onClick={() => handleTabIndex(index)}>{tab}</div>
             ))}
         </div>
-        {error ? <div className={styles.container}><div className={styles.errorMessage}>Что-то пошло не так, пожалуйста, обновите страницу</div></div> :
-            tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
-        }
+        <div className={styles.mainContainer}>
+          <div className={styles.checkboxContainer}>
+            {
+                flightCheckboxes.map(item => (
+                    <label key={item.key} className={styles.checkbox}>
+                        <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleCheckboxChange} />
+                        <span className={styles.label}>{item.label}</span>
+                    </label>
+                ))
+            }
+          </div>
+          <div className={styles.flightsContainer}>
+            {error ? <div className={styles.container}><div className={styles.errorMessage}>Что-то пошло не так, пожалуйста, обновите страницу</div></div> :
+                tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
+            }
+          </div>
+        </div>
+    
     </div>
     )
 }
