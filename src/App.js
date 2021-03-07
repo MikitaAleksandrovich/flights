@@ -55,11 +55,6 @@ const handleTabIndex = (index) => {
     return (
         <div className={styles.container}>
         <img className={styles.image} src={Logo} alt="app_logo" />
-        <div className={styles.tabs}>
-            {flightTabIndexes.map((tab, index) => (
-                <div className={`${styles.tab} ${activeTabIndex === index && styles.activeTab}`} onClick={() => handleTabIndex(index)}>{tab}</div>
-            ))}
-        </div>
         <div className={styles.mainContainer}>
           <div className={styles.checkboxContainer}>
             <div className={styles.checkboxHeader}>КОЛИЧЕСТВО ПЕРЕСАДОК</div>
@@ -73,6 +68,11 @@ const handleTabIndex = (index) => {
             }
           </div>
           <div className={styles.flightsContainer}>
+            <div className={styles.tabs}>
+              {flightTabIndexes.map((tab, index) => (
+                  <div className={`${styles.tab} ${activeTabIndex === index && styles.activeTab}`} onClick={() => handleTabIndex(index)}>{tab}</div>
+              ))}
+            </div>
             {error ? <div className={styles.container}><div className={styles.errorMessage}>Что-то пошло не так, пожалуйста, обновите страницу</div></div> :
                 tickets.map((ticket) => <Flight key={ticket.price} ticket={ticket}/>)
             }
