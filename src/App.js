@@ -62,6 +62,7 @@ const handleTabIndex = (index) => {
         </div>
         <div className={styles.mainContainer}>
           <div className={styles.checkboxContainer}>
+            <div className={styles.checkboxHeader}>КОЛИЧЕСТВО ПЕРЕСАДОК</div>
             {
                 flightCheckboxes.map(item => (
                     <label key={item.key} className={styles.checkbox}>

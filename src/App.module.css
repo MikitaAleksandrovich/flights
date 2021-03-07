@@ -23,10 +23,29 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 75px 0 20px;
+  padding: 20px 30px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 8px rgba(#000, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  height: 1%;
+}
+
+.checkboxHeader {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.5px;
+  color: #4A4A4A;
+  margin-bottom: 15px;
 }
 
 .checkbox {
   display: flex;
+  cursor: pointer;
+  margin: 5px 0;
 }
 
 .errorMessage {
